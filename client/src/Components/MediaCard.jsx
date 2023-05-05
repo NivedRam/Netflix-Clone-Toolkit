@@ -18,13 +18,17 @@ import styled from "styled-components";
 import { firebaseAuth } from "../utils/Firebase-config";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { removeFromLikedMovies } from "../Store/Index";
 
 function MediaCard({ movieData, genreData, isliked = false }) {
   // const [isHovered,setIsHovered]=useState(false)
   const [isHovered, setIsHovered] = useState(false);
-  const [email, setEmail] = useState(undefined);
   const navigate = useNavigate();
-
+  console.log("movieDatasssss", movieData);
+  const dispatch=useDispatch();
+  
+  const [email, setEmail] = useState(undefined);
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (currentUser) => {
       console.log("currentUser", currentUser);
@@ -35,13 +39,14 @@ function MediaCard({ movieData, genreData, isliked = false }) {
 
   const addToList = async () => {
     try {
+      console.log(email);
       await axios.post("http://localhost:5000/api/user/add", {
         email,
         data: movieData,
       });
       console.log("onclicked");
     } catch (err) {
-      console.log(err);
+      console.log("error", err);
     }
   };
 
@@ -49,7 +54,7 @@ function MediaCard({ movieData, genreData, isliked = false }) {
     <Container
       //   style={{
       //     maxWidth: "230px",
-      //     width: "230px",
+      //     width: "230px",3
       //     height: "100%",
       //     cursor: "pointer",
       //     position: "relative",
@@ -133,9 +138,9 @@ function MediaCard({ movieData, genreData, isliked = false }) {
               <RiThumbDownFill title="dislike" />
 
               {isliked ? (
-                <BsCheck title="Remove From List" />
+                <BsCheck title="Remove From List" onClick={()=>dispatch(removeFromLikedMovies({movieId:movieData.id,email}))} />
               ) : (
-                <AiOutlinePlus title="Add to my list"  onClick={addToList} />
+                <AiOutlinePlus title="Add to my list" onClick={addToList} />
               )}
             </div>
             <div className="info">

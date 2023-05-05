@@ -4,10 +4,10 @@ const mongoose=require("mongoose")
 const userRoutes=require("./routes/UserRoutes")
 
 
-const app=express()
+const app=express();
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 mongoose.connect("mongodb://localhost:27017/netflix",{
     useNewUrlParser:true,
@@ -16,5 +16,5 @@ mongoose.connect("mongodb://localhost:27017/netflix",{
     console.log("db connected suuccesfully");
 });
 
-app.use("api/user",userRoutes);
-app.listen(5000,console.log("server started at port 5000"))
+app.use("/api/user",userRoutes);
+app.listen(5000,()=>{console.log("server started at port 5000")});

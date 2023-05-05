@@ -6,6 +6,7 @@ import Netflix from "./Pages/Netflix";
 import Player from "./Pages/Player";
 import Movies from "./Pages/Movies";
 import TVShows from "./Pages/TVShows";
+import UserLikedMovies from "./Pages/UserLikedMovies";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/player" element={<Player />} />
           <Route exact path="/movies" element={<Movies />} />
           <Route exact path="/TV" element={<TVShows/>} />
+          <Route exact path="/mylist" element={<UserLikedMovies/>}/>
         </Routes>
       </Router>
     </div>
